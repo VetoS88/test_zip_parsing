@@ -122,7 +122,7 @@ class ArchiveParser:
         self.queue_for_collect_levels = queue_for_collect_levels
         self.queue_for_collect_objects = queue_for_collect_objects
 
-    def parse_xml(self, document_raw: bytes):
+    def parse_xml(self, document_raw: bytes) -> None:
         """
         Parse xml from bytes
         Create target tuple
@@ -147,7 +147,7 @@ class ArchiveParser:
         for object_name in objects_names:
             self.queue_for_collect_objects.put_nowait((doc_id, object_name))
 
-    async def parse_archive(self, archive_name: str):
+    async def parse_archive(self, archive_name: str) -> None:
         """
         Read archive
         :param archive_name:
@@ -172,7 +172,7 @@ class ArchiveParser:
         loop.run_until_complete(asyncio.gather(*tasks))
 
     @classmethod
-    def create_stats(cls, archive_path_name):
+    def create_stats(cls, archive_path_name: str) -> str:
         """
         Run read source data in parallel
         :param archive_path_name:
