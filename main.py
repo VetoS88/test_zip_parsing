@@ -192,6 +192,7 @@ class ArchiveParser:
         archives_count = len(archive_files_list)
 
         processor_core_count = os.cpu_count()
+        print(f"Run on {processor_core_count} cores")
 
         start_index = 0
         processes = []
@@ -203,12 +204,13 @@ class ArchiveParser:
             archives_chunk = archive_files_list[start_index: archive_count]
             start_index = archive_count
 
-            process_detect_proc = multiprocessing.Process(
+            parce_process = multiprocessing.Process(
                 target=cls.parse_archives,
                 args=(queue_for_collect_levels, queue_for_collect_objects, archives_chunk),
             )
-            process_detect_proc.start()
-            processes.append(process_detect_proc)
+            parce_process.start()
+            print(f"Run parallel process {parce_process}")
+            processes.append(parce_process)
 
         for process in processes:
             process.join()
